@@ -2,6 +2,7 @@ package com.example.boggle;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -10,6 +11,7 @@ public class Boggle {
     //Global variables referenced by private functions.
     private List<String> legalWords = new ArrayList<String>(); //Dictionary of words
     private List<String> wordsFound = new ArrayList<String>(); //Found words to return
+    private HashSet<String> legalWordsHashSet = new HashSet<>();
     private int xMax, yMax, boardWidth, boardHeight; //Board dimensions
     char[][] board; //Represents board grid
 
@@ -141,8 +143,11 @@ public class Boggle {
 
     //Check if word is legal and add it list to be returned
     private void containsString(String currWord) {
-        int result = Collections.binarySearch(legalWords, currWord);
-        if (result >= 0 && !wordsFound.contains(currWord)) {
+//        int result = Collections.binarySearch(legalWords, currWord);
+//        if (result >= 0 && !wordsFound.contains(currWord)) {
+//            wordsFound.add(currWord);
+//        }
+        if(legalWordsHashSet.contains(currWord)){
             wordsFound.add(currWord);
         }
     }
@@ -184,6 +189,7 @@ public class Boggle {
             for (int j = 0; j < boardLetters.length(); j++) {
                 if (legalWords.get(i).startsWith(String.valueOf(boardLetters.charAt(j)))) {
                     hasFirstLetter = true;
+                    legalWordsHashSet.add(legalWords.get(i));
                 }
             }
             if (!hasFirstLetter) {
